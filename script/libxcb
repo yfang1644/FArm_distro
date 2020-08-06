@@ -1,0 +1,21 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.14
+
+PKG_DEPENDS="xcb-proto libpthread-stubs libXau"
+PKG_MAINTAINER="Bart Massey, Jamey Sharp, and Josh Triplett."
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="X C-language Bindings library"
+
+buildpkg() {
+  PYTHON_TOOLCHAIN_PATH=$INSTALL_PATH/usr/lib/python2.7/dist-packages
+  PKG_CONFIG="/usr/bin/pkg-config"
+  PKG_CONFIG="$PKG_CONFIG --define-variable=pythondir=$PYTHON_TOOLCHAIN_PATH"
+  PKG_CONFIG="$PKG_CONFIG --define-variable=xcbincludedir=$INSTALL_PATH/usr/share/xcb"
+
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

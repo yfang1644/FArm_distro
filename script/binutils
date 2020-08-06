@@ -1,0 +1,21 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.34
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="GNU.ORG"
+PKG_SECTION="tools"
+PKG_SHORTDESC="A GNU collection of binary utilities"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --enable-gold \
+      --enable-ld=default \
+      --enable-lto \
+      --enable-plugins \
+      --with-system-zlib
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

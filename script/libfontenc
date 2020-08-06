@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.1.4
+
+PKG_DEPENDS="xorgproto zlib"
+PKG_MAINTAINER="Alan Coopersmith <alan.coopersmith@oracle.com>"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="X11 font encoding library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

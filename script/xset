@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION="1.2.4"
+
+PKG_DEPENDS="libXmu"
+PKG_MAINTAINER="Dr. Tilmann Bubeck <t.bubeck@reinform.de>"
+PKG_SECTION="x11/app"
+PKG_SHORTDESC="User preference utility for X"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="${LDFLAGS} -Wl,-rpath=${INSTALL_PATH}/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

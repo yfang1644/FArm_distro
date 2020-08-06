@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.8
+
+PKG_DEPENDS="libnl-tiny libressl"
+PKG_MAINTAINER="Jouni Malinen <j@w1.fi>"
+PKG_SECTION="network"
+PKG_SHORTDESC="An IEEE 802.11i supplicant implementation"
+
+export CFLAGS="$CFLAGS -D_GNU_SOURCE \
+   -I${INSTALL_PATH}/usr/include/libnl-tiny"
+
+buildpkg() {
+  cd ../wpa_supplicant
+  cp defconfig .config
+
+  make $MAKEFLAGS \
+    CONFIG_LIBNL20=y \
+    CONFIG_LIBNL_TINY=y \
+    CC=${TARGET_PREFIX}gcc
+
+  make install DESTDIR=$INSTALL_PKG \
+    CONFIG_LIBNL20=y \
+    CONFIG_LIBNL_TINY=y \
+    CC=${TARGET_PREFIX}gcc \
+    BINDIR=/usr/bin
+}

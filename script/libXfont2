@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.0.4
+
+PKG_DEPENDS="xtrans freetype libfontenc"
+PKG_MAINTAINER="Keith Packard <keithp@keithp.com> et al"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="X font Library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

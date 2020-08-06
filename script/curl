@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=7.67.0
+
+PKG_DEPENDS="rtmpdump"
+PKG_MAINTAINER="Daniel Stenberg <daniel@haxx.se>"
+PKG_SECTION="web"
+PKG_SHORTDESC="Client and library for (HTTP, HTTPS, FTP, ...) transfers"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LIBS="-lcrypto -lssl"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

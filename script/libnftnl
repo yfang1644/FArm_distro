@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.1.5
+
+PKG_DEPENDS="libmnl"
+PKG_MAINTAINER="Pablo Neira Ayuso <pablo@netfilter.org>"
+PKG_SECTION="network"
+PKG_SHORTDESC="A userspace library providing a low-level netlink programming interface (API) to the in-kernel nf_tables subsystem."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

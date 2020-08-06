@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.14.0
+
+PKG_DEPENDS="glib"
+PKG_MAINTAINER="Benedikt Meurer <benny@xfce.org>"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="Basic utility library for Xfce4."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

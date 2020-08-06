@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.24.4
+
+PKG_DEPENDS="pango gdk-pixbuf at-spi2-atk libepoxy"
+PKG_MAINTAINER="Peter Mattis <petm@xcf.berkeley.edu>, et al"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="GTK+ is a multi-platform toolkit for creating graphical user interfaces."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-xinerama \
+      --disable-xrandr \
+      --disable-xfixes \
+      --disable-xcomposite \
+      --disable-xdamage \
+      --enable-x11-backend \
+      LDFLAGS="$LDFLAGS -lxcb -lXau -lffi"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

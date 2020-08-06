@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.24.30
+
+PKG_DEPENDS="atk libXrandr libXi pango gdk-pixbuf"
+PKG_MAINTAINER="Matthias Clasen <mclasen@redhat.com>"
+PKG_SECTION="x11/toolkits"
+PKG_SHORTDESC="The Gimp ToolKit (GTK)"
+
+buildpkg() {
+   ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

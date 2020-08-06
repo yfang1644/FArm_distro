@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.26.2
+
+PKG_DEPENDS="at-spi2-core atk"
+PKG_MAINTAINER="Mike Gorse <mgorse@suse.com>, etl al"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="AT-SPI and Accessibility"
+
+buildpkg() {
+   ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

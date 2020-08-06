@@ -1,0 +1,36 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.2.3
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Michael Niedermayer, et al."
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="Fmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
+
+buildpkg() {
+  cd ..
+#  autoreconf -ivf
+
+  ./configure \
+    --prefix=/usr \
+    --arch="$TARGET_ARCH" \
+    --enable-cross-compile \
+    --cross-prefix="$TARGET_PREFIX" \
+    --extra-cflags="-I$INSTALL_PATH/usr/include/SDL2" \
+    --extra-ldflags="-L$INSTALL_PATH/usr/lib" \
+    --target-os="linux" \
+    --host-cc=gcc \
+    --disable-static \
+    --enable-shared \
+    --disable-version3 \
+    --enable-gpl \
+    --enable-nonfree \
+    --enable-optimizations \
+    --enable-openssl \
+    --enable-runtime-cpudetect \
+    --enable-filters
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

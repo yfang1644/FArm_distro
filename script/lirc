@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.9.4d
+
+PKG_DEPENDS="libpng"
+PKG_MAINTAINER="Christoph Bartelmus <lirc@bartelmus.de>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Linux Infrared Remote Control"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+    ac_cv_func_forkpty=no \
+    ac_cv_lib_util_forkpty=no \
+    ac_cv_prog_HAVE_PYTHON3=no \
+    --enable-devinput
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

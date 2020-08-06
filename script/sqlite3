@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.32.3
+
+PKG_DEPENDS="zlib"
+PKG_MAINTAINER="sqlite-users@mailinglists.sqlite.org"
+PKG_SECTION="database"
+PKG_SHORTDESC="An Embeddable SQL Database Engine"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --enable-readline
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

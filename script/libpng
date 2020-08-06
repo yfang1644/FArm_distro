@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.6.37
+
+PKG_DEPENDS="zlib"
+PKG_MAINTAINER="Glenn Randers-Pehrson <glennrp@users.sourceforge.net>"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="Portable Network Graphics (PNG) Reference Library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

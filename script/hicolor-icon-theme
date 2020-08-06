@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.17
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Alexander Larsson  <alexl@redhat.com>"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="Hi-Color Icon themes"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

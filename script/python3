@@ -1,0 +1,30 @@
+#!/bin/bash
+
+PKG_NAME=Python
+PKG_VERSION=3.8.2
+
+PKG_DEPENDS="readline libressl expat zlib bzip2 libffi tk sqlite3"
+PKG_MAINTAINER="Guido van Rossum (home page: http://www.python.org/~guido/)"
+PKG_SECTION="lang"
+PKG_SHORTDESC="The Python3 programming language"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      ac_cv_file__dev_ptmx=no \
+      ac_cv_file__dev_ptc=no \
+      ac_cv_buggy_getaddrinfo=no \
+      --without-cxx-main \
+      --with-system-expat \
+      --with-system-ffi \
+      --with-doc-strings \
+      --without-pymalloc \
+      --without-ensurepip \
+      --with-threads \
+      --with-tcltk-includes="-I$INSTALL_PATH/usr/include" \
+      --with-tcltk-libs="-ltcl8.6 -ltk8.6" \
+      --enable-optimizations
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+  chmod u+w $INSTALL_PKG/usr/lib/libpython*.so.*
+}

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.41.0
+
+export CFLAGS="$CFLAGS -I${INSTALL_PATH}/usr/lib/glib-2.0/include"
+
+PKG_DEPENDS="cairo harfbuzz libXft"
+PKG_MAINTAINER="Owen Taylor<otaylor@redhat.com>, Behdad Esfahbod<behdad@gnome.org>"
+PKG_SECTION="x11/toolkits"
+PKG_SHORTDESC="Pango is a library for layout and rendering of internationalized text"
+
+buildpkg() {
+   ../configure ${TARGET_CONFIGURE_OPTS} \
+       --with-xft
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

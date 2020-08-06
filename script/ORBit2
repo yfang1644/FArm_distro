@@ -1,0 +1,31 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.14.19
+
+PKG_DEPENDS="libIDL"
+PKG_MAINTAINER="Michael Meeks <michael@ximian.com>"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="ORBit2 is a CORBA 2.4-compliant Object Request Broker (ORB) featuring mature C, C++ and Python bindings."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      ac_cv_alignof_CORBA_octet=1 \
+      ac_cv_alignof_CORBA_boolean=1 \
+      ac_cv_alignof_CORBA_char=1 \
+      ac_cv_alignof_CORBA_wchar=2 \
+      ac_cv_alignof_CORBA_short=2 \
+      ac_cv_alignof_CORBA_long=4 \
+      ac_cv_alignof_CORBA_long_long=8 \
+      ac_cv_alignof_CORBA_float=4 \
+      ac_cv_alignof_CORBA_double=8 \
+      ac_cv_alignof_CORBA_long_double=8 \
+      ac_cv_alignof_CORBA_struct=1 \
+      ac_cv_alignof_CORBA_pointer=4 \
+      --with-idl-compiler=/usr/bin/orbit-idl-2
+
+  sed -i 's/-DG_DISABLE_DEPRECATED//g' linc2/src/Makefile
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

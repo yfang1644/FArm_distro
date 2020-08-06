@@ -1,0 +1,81 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=233
+
+PKG_DEPENDS="libcap util-linux"
+PKG_MAINTAINER="Chris Kühl <chris@kinvolk.io>"
+PKG_SECTION="system"
+PKG_SHORTDESC="System and session manager."
+
+buildpkg() {
+  ../autogen.sh
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+    ac_cv_func_malloc_0_nonnull=yes \
+    --disable-coverage \
+    --disable-kmod \
+    --disable-xkbcommon \
+    --enable-blkid \
+    --disable-ima \
+    --disable-selinux \
+    --disable-libcurl \
+    --disable-libidn \
+    --disable-xz \
+    --disable-apparmor \
+    --disable-gcrypt \
+    --enable-logind \
+    --disable-machined \
+    --disable-importd \
+    --disable-hostnamed \
+    --disable-timedated \
+    --disable-timesyncd \
+    --disable-localed \
+    --disable-coredump \
+    --disable-polkit \
+    --disable-resolved \
+    --disable-networkd \
+    --enable-hwdb \
+    --disable-manpages \
+    --disable-tests \
+    --disable-microhttpd \
+    --with-sysvinit-path= \
+    --with-sysvrcnd-path= \
+    --with-tty-gid=5 \
+    --with-dbuspolicydir=/etc/dbus-1/system.d \
+    --with-dbussessionservicedir=/usr/share/dbus-1/services \
+    --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
+    --with-rootprefix=/usr \
+    --with-rootlibdir=/usr/lib \
+    --with-default-hierarchy=hybrid \
+    #--disable-nls \
+    #--disable-dbus \
+    #--disable-utmp \
+    #--disable-seccomp \
+    #--disable-pam \
+    #--disable-acl \
+    #--disable-smack \
+    #--disable-audit \
+    #--disable-elfutils \
+    #--disable-libcryptsetup \
+    #--disable-qrencode \
+    #--disable-libiptc \
+    #--disable-vconsole \
+    #--disable-quotacheck \
+    #--enable-tmpfiles \
+    #--disable-environment-d \
+    #--disable-sysusers \
+    #--disable-firstboot \
+    #--disable-randomseed \
+    #--disable-backlight \
+    #--disable-rfkill \
+    #--disable-efi \
+    #--disable-gnuefi \
+    #--disable-kdbus \
+    #--disable-myhostname \
+    #--disable-hibernate \
+    #--disable-ldconfig \
+    #--disable-split-usr \
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

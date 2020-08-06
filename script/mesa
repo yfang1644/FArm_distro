@@ -1,0 +1,52 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=18.3.4
+
+PKG_DEPENDS="expat libdrm libxshmfence libXxf86vm libXrandr libXdamage"
+PKG_MAINTAINER="Brian Paul (brian@precisioninsight.com)"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="3-D graphics library with OpenGL API"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+    CC_FOR_BUILD=gcc \
+    CXX_FOR_BUILD=g++ \
+    CFLAGS_FOR_BUILD= \
+    CXXFLAGS_FOR_BUILD= \
+    LDFLAGS_FOR_BUILD= \
+    --disable-asm \
+    --disable-debug \
+    --disable-mangling \
+    --disable-selinux \
+    --disable-va \
+    --disable-valgrind \
+    --enable-dri \
+    --enable-dri3 \
+    --enable-glx \
+    --enable-driglx-direct \
+    --enable-glx-tls \
+    --disable-osmesa \
+    --disable-gallium-osmesa \
+    --disable-gles1 \
+    --enable-gles2 \
+    --enable-egl \
+    --with-platforms=x11,drm \
+    --enable-xa \
+    --enable-gbm \
+    --disable-nine \
+    --disable-xvmc \
+    --disable-vdpau \
+    --disable-opencl \
+    --enable-opencl-icd \
+    --disable-gallium-tests \
+    --enable-shared-glapi \
+    --disable-llvm \
+    --disable-silent-rules \
+    --with-gallium-drivers=vc4,swrast \
+    --with-dri-drivers=swrast \
+    --with-vulkan-drivers=no
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

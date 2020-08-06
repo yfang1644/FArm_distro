@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.34.2
+
+PKG_DEPENDS="libxml2 adwaita-icon-theme libsecret poppler gspell"
+PKG_MAINTAINER="Jonathan Blandfords (jrb@gnome.org), Nickolay V. Shmyrev(nshmyrev@yandex.ru), Carlos Garcia Campos(carlosgc@gnome.org)"
+PKG_SECTION="apps"
+PKG_SHORTDESC="Multiple document viewer (PDF)."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-nautilus \
+      LDFLAGS="$LDFLAGS -luuid -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  sed -i "s/-Werror=format=2//g" `find . -name Makefile`
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

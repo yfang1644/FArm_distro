@@ -1,0 +1,34 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.0.5
+
+PKG_DEPENDS="alsa-lib dbus"
+PKG_MAINTAINER="Sam Lantinga <slouken@libsdl.org>"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="Simple DirectMedia Layer"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --with-x \
+      --enable-audio \
+      --enable-video \
+      --enable-pthreads \
+      --disable-video-wayland \
+      --disable-pulseaudio \
+      --enable-video-x11 \
+      --enable-x11-shared \
+      --enable-video-x11-xinerama \
+      --enable-video-x11-xinput \
+      --enable-video-x11-xrandr \
+      --enable-video-opengl \
+      --disable-video-opengles \
+      --disable-video-opengles1 \
+      --enable-video-opengles2 \
+      --enable-alsa \
+      CFLAGS="$CFLAGS -I$INSTALL_PATH/usr/include/dbus-1.0" \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

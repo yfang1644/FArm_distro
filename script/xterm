@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=333
+
+PKG_DEPENDS="libXaw3d ncurses"
+PKG_MAINTAINER="Thomas E. Dickey <dickey@invisible-island.net>"
+PKG_SECTION="apps"
+PKG_SHORTDESC="X-Window Terminal Emulator"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --with-Xaw3d \
+      --without-xinerama \
+      LDFLAGS="$LDFLAGS -luuid -lxcb -lXau"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

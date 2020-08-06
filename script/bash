@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.4
+
+PKG_DEPENDS="readline ncurses"
+PKG_MAINTAINER="Chet Ramey<chet.ramey@case.edu>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="The GNU Bourne Again shell"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-progcomp \
+      --with-curses \
+      --with-installed-readline
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

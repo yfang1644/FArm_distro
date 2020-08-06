@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=6.1
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Keith Bostic"
+PKG_SECTION="devel"
+PKG_SHORTDESC="The ncurses (new curses) library"
+
+buildpkg() {
+  ../configure $TARGET_CONFIGURE_OPTS \
+    --without-normal \
+    --without-debug \
+    --with-shared \
+    --without-progs
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

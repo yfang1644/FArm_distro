@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.8.9
+
+PKG_DEPENDS="exo"
+PKG_MAINTAINER="nedikt Meurer <benny@xfce.org>, et al"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="Thunar is a modern file manager for the Unix/Linux desktop, aiming to be easy-to-use and fast."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib -lxcb -lXau" \
+      --disable-exif \
+      --disable-pcre
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.4.0
+
+PKG_DEPENDS="zlib libressl"
+PKG_MAINTAINER="Andrej Stepanchuk,  Howard Chu, The Flvstreamer Team"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="A toolkit for RTMP streams."
+
+buildpkg() {
+  cp ../* . -ar
+  make prefix=/usr \
+       CROSS_COMPILE=arm-linux- \
+       OPT="" \
+       XCFLAGS="$CFLAGS" \
+       XLDFLAGS="$LDFLAGS" \
+       XLIBS="-lm"
+
+  mkdir -p $INSTALL_PKG/usr/lib/pkgconfig/
+
+  make DESTDIR=$INSTALL_PKG \
+       prefix=/usr \
+       CROSS_COMPILE=arm-linux- \
+       OPT="" \
+       XCFLAGS="$CFLAGS" \
+       XLDFLAGS="$LDFLAGS" \
+       XLIBS="-lm" \
+       install
+}

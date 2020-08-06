@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.2.8
+
+PKG_DEPENDS="glib"
+PKG_MAINTAINER="Dom Lachowicz"
+PKG_SECTION="compress"
+PKG_SHORTDESC="libenchant -- Generic spell checking library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

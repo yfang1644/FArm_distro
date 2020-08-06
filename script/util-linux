@@ -1,0 +1,24 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.33.2
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Karel Zak <kzak@redhat.com>"
+PKG_SECTION="system"
+PKG_SHORTDESC="Miscellaneous system utilities for Linux"
+
+buildpkg () {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+    --disable-all-programs \
+    --without-ncurses \
+    --without-tinfo \
+    --without-systemd \
+    --enable-libuuid \
+    --enable-libblkid \
+    --enable-libmount \
+    --enable-libsmartcols
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

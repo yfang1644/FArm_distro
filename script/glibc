@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.31
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="GNU.ORG"
+PKG_SECTION="tools"
+PKG_SHORTDESC="The GNU C library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

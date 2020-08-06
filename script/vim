@@ -1,0 +1,29 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=8.1
+
+PKG_DEPENDS="ncurses"
+PKG_MAINTAINER="Bram Moolenaar <Bram@vim.org>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Vi IMproved"
+
+buildpkg() {
+  cd ..
+
+  ./configure ${TARGET_CONFIGURE_OPTS} \
+      vim_cv_toupper_broken=yes \
+      vim_cv_terminfo=yes \
+      vim_cv_tgetent=yes \
+      vim_cv_tty_group=world \
+      vim_cv_getcwd_broken=yes \
+      vim_cv_stat_ignores_slash=yes \
+      vim_cv_memmove_handles_overlap=yes \
+      vim_cv_bcopy_handles_overlap=yes \
+      --enable-gui=no \
+      --without-x \
+      --with-tlib=ncurses
+    
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

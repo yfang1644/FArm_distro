@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.7
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Ben Croston <ben@croston.org>"
+PKG_SECTION="apps"
+PKG_SHORTDESC="A module to control Raspberry Pi GPIO channels"
+
+buildpkg() {
+  cd ..
+
+  export CC=aarch64-linux-gcc
+  export LDSHARED="aarch64-linux-ld -shared"
+  python3 setup.py build --prefix=/usr --host=aarch64-linux
+  python3 setup.py install --prefix=usr --root=$INSTALL_PKG
+}

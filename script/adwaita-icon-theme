@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.34.3
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Hylke Bons <hylke.bons@intel.com>"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="Gnome adwaita icon theme"
+""
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

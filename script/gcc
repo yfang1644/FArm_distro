@@ -1,0 +1,55 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=9.2.0
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="GNU.ORG"
+PKG_SECTION="tools"
+PKG_SHORTDESC="The GNU Compiler Collection"
+
+buildpkg() {
+    ../configure \
+        --host=aarch64-linux \
+        --prefix=/usr \
+        --without-headers \
+        --with-system-zlib \
+        --enable-static \
+        --enable-shared \
+        --with-gnu-as \
+        --with-gnu-ld \
+        --enable-languages=c,c++ \
+        --enable-gold \
+        --enable-ld=default \
+        --enable-lto \
+        --disable-libada \
+        --disable-libatomic \
+        --disable-libgomp \
+        --disable-libitm \
+        --disable-libmudflap \
+        --disable-libquadmath \
+        --disable-libsanitizer \
+        --disable-libssp \
+        --disable-libstdcxx \
+        --disable-libvtv \
+        --disable-decimal-float \
+        --disable-multilib
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+
+  rm -rf *
+    ../libstdc++-v3/configure \
+        --host=aarch64-linux \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --prefix=/usr \
+        --enable-static \
+        --enable-shared \
+        --disable-multilib \
+        --disable-libstdcxx-threads \
+        --disable-libstdcxx-pch
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

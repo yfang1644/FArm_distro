@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.6.4
+
+PKG_DEPENDS="libxfce4ui"
+PKG_MAINTAINER="Jannis Pohlmann <jannis@xfce.org>, et al"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="Garcon is a freedesktop.org compliant menu implementation based on GLib and GIO."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

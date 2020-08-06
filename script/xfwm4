@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.14.0
+
+PKG_DEPENDS="libwnck libxfce4ui libXinerama"
+PKG_MAINTAINER="Olivier Fourdan <fourdan@xfce.org>"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="XFCE4 window manager"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-compositor \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib -lcairo -lxcb -lXau -luuid -lmount -lblkid"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

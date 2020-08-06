@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.14.0
+
+PKG_DEPENDS="garcon exo"
+PKG_MAINTAINER="Stephan Arts <stephan@xfce.org>"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="xfce4 settings"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -lxcb -lXau -luuid -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

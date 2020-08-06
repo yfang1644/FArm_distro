@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=8.6.9
+
+PKG_DEPENDS="zlib"
+PKG_MAINTAINER="Donal Fellows <dkf@users.sf.net>"
+PKG_SECTION="lang"
+PKG_SHORTDESC="Tcl is a simple-to-learn yet very powerful language."
+
+buildpkg() {
+  ../unix/configure ${TARGET_CONFIGURE_OPTS} \
+      --mandir=/usr/share/man
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

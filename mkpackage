@@ -1,0 +1,50 @@
+#!/bin/bash
+
+make_dpkg() {
+  rm -rf $INSTALL_PKG/usr/include
+  rm -rf $INSTALL_PKG/usr/lib/cmake
+  rm -rf $INSTALL_PKG/usr/lib/pkgconfig
+  rm -rf $INSTALL_PKG/usr/man
+  rm -rf $INSTALL_PKG/usr/share/aclocal
+  rm -rf $INSTALL_PKG/usr/share/bash-completion
+  rm -rf $INSTALL_PKG/usr/share/doc
+  rm -rf $INSTALL_PKG/usr/share/gtk-doc
+  rm -rf $INSTALL_PKG/usr/share/info
+  rm -rf $INSTALL_PKG/usr/share/locale
+  rm -rf $INSTALL_PKG/usr/share/man
+  rm -rf $INSTALL_PKG/usr/share/pkgconfig
+  rm -rf $INSTALL_PKG/usr/share/zsh
+  find $INSTALL_PKG \( -name "*.orig" \
+                -o -name "*.rej" \
+                -o -name "*.a" \
+                -o -name "*.la" \
+                -o -name "*.o" \
+                -o -name "*.in" \
+                -o -name ".git*" \) \
+    -exec rm -f {} \; 2>/dev/null || :
+  find $INSTALL_PKG -type d -exec rmdir -p {} \; 2>/dev/null || :
+
+  #strip 
+  $STRIP `find $INSTALL_PKG -type f -name "*.so*" 2>/dev/null` 2>/dev/null || :
+  $STRIP `find $INSTALL_PKG/bin $INSTALL_PKG/usr/bin \
+      $INSTALL_PKG/sbin $INSTALL_PKG/usr/sbin \
+      -type f -executable 2>/dev/null` 2>/dev/null || :
+
+  # make package
+  mkdir -p $INSTALL_PKG/DEBIAN
+  new_p=`echo $PKG_NAME|sed 's/_/-/g'`
+  new_d=`echo $PKG_DEPENDS|sed 's/_/-/g'`
+  new_d=`echo $new_d|sed 's/ /,/g'`
+  cat > $INSTALL_PKG/DEBIAN/control << EOF
+Package: $new_p
+Version: $PKG_VERSION
+Architecture: $TARGET_ARCH
+Maintainer: $PKG_MAINTAINER
+Depends: $new_d
+Section: $PKG_SECTION
+Description: $PKG_SHORTDESC
+EOF
+
+  cd $SRC/$PKG_NAME-$PKG_VERSION
+  fakeroot dpkg -b $INSTALL_PKG ${PKG_NAME}_${PKG_VERSION}-${DISTRO}_$TARGET_ARCH.deb
+}

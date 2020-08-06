@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.7.7
+
+PKG_DEPENDS="gtk+"
+PKG_MAINTAINER="Christian Hammond <chipx86@chipx86.com>, et al"
+PKG_SECTION="lib"
+PKG_SHORTDESC="libnotify"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -luuid"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

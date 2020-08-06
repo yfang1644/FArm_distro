@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION="1.4.3"
+
+PKG_DEPENDS="libxkbfile"
+PKG_MAINTAINER="Peter Hutterer <peter.hutterer@who-t.net>"
+PKG_SECTION="x11/app"
+PKG_SHORTDESC="Compiles XKB keyboard description"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

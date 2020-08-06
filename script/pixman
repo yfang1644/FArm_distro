@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.40.0
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Keith Packard, SuSE, Inc."
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="Pixel manipulation library"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-gtk
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

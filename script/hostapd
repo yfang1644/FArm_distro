@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.8
+
+PKG_DEPENDS="libnl-tiny libressl"
+PKG_MAINTAINER="Jouni Malinen <j@w1.fi>"
+PKG_SECTION="network"
+PKG_SHORTDESC="User space daemon for access points, IEEE 802.1X/WPA/EAP Authenticator"
+
+export CFLAGS="$CFLAGS -D_GNU_SOURCE \
+   -I${INSTALL_PATH}/usr/include/libnl-tiny"
+
+buildpkg() {
+  cd ../hostapd
+  cp defconfig .config
+
+  make $MAKEFLAGS \
+    CC=${TARGET_PREFIX}gcc \
+    CONFIG_LIBNL20=y \
+    CONFIG_LIBNL_TINY=y
+
+  make install DESTDIR=$INSTALL_PKG \
+    CC=${TARGET_PREFIX}gcc \
+    CONFIG_LIBNL20=y \
+    CONFIG_LIBNL_TINY=y \
+    BINDIR=/usr/bin
+}

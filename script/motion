@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.3
+
+PKG_DEPENDS="libmicrohttpd ffmpeg libjpeg-turbo sqlite3"
+PKG_MAINTAINER="Motion Project team"
+PKG_SECTION="apps"
+PKG_SHORTDESC="Motion is a program that monitors the video signal from cameras"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --without-mysql \
+      --with-sqlite3 \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

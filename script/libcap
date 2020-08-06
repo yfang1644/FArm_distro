@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.27
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Andrew G. Morgan <morgan@kernel.org>"
+PKG_SECTION="devel"
+PKG_SHORTDESC="A library for getting and setting POSIX.1e capabilities"
+
+buildpkg() {
+  cd ..
+
+  make install DESTDIR=$INSTALL_PKG \
+    CC=${TARGET_PREFIX}gcc \
+    prefix=/usr \
+    lib=/lib \
+    BUILD_CC=gcc \
+    BUILD_CFLAGS="-I$SRC/$PKG_NAME-$PKG_VERSION/libcap/include" \
+    -C libcap
+
+  cd build_arm
+}

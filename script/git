@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.27.0
+
+PKG_DEPENDS="curl expat libressl zlib"
+PKG_MAINTAINER="Linus Torvalds"
+PKG_SECTION="apps"
+PKG_SHORTDESC="Fast, scalable, distributed revision control system."
+
+buildpkg() {
+  cd ..
+  autoreconf -ivf
+  ./configure ${TARGET_CONFIGURE_OPTS} \
+      ac_cv_fread_reads_directories=yes \
+      ac_cv_snprintf_returns_bogus=yes \
+      --without-iconv \
+      --with-openssl \
+      --with-expat \
+      --with-curl \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

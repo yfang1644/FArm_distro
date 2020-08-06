@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2020.1
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Jim Gettys"
+PKG_SECTION="x11/proto"
+PKG_SHORTDESC="the X11 core protocol"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

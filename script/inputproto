@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.3.2
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Peter Hutterer <peter.hutterer@who-t.net>"
+PKG_SECTION="x11/proto"
+PKG_SHORTDESC="Input extension headers"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.1.4
+
+PKG_DEPENDS="libXext"
+PKG_MAINTAINER="Alan Coopersmith <alan.coopersmith@oracle.com>"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="Extension library for the XFree86-VidMode X extension"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --enable-malloc0returnsnull
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install 
+}

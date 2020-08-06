@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION="1.3.1"
+
+PKG_DEPENDS="libxkbfile"
+PKG_MAINTAINER="The Open Group"
+PKG_SECTION="x11/app"
+PKG_SHORTDESC="Sets the keyboard using the X Keyboard Extension."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.5.7
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="David Herrmann <dh.herrmann@gmail.com>"
+PKG_SECTION="system"
+PKG_SHORTDESC="A wrapper library for evdev devices."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

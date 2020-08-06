@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.59.0
+
+PKG_DEPENDS="cairo"
+PKG_MAINTAINER="Albert Astals Cid <aacid@kde.org>"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="A PDF rendering library."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --enable-libopenjpeg=none \
+      LDFLAGS="$LDFLAGS -luuid -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

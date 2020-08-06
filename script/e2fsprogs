@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.43.4
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Theodore Ts'o <tytso@mit.edu> or <tytso@alum.mit.edu>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Utilities for use with the ext2 filesystem"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

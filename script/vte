@@ -1,0 +1,21 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.50.0
+
+PKG_DEPENDS="gtk+"
+PKG_MAINTAINER="ehdad Esfahbod<behdad@gnome.org>, Chris Wilson<chris@chris-wilson.co.uk>"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="Virtual Terminal Emulator"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-test-application \
+      --disable-introspection \
+      --disable-vala \
+      --without-gnutls \
+      LDFLAGS="$LDFLAGS -luuid -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

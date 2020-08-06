@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.36.0
+
+PKG_DEPENDS="libpng tiff libjpeg-turbo glib"
+PKG_MAINTAINER="Peter Mattis<petm@xcf.berkeley.edu>, Spencer Kimball<spencer@xcf.berkeley.edu>, Josh MacDonald<jmacd@xcf.berkeley.edu>, et al"
+PKG_SECTION="x11/toolkits"
+PKG_SHORTDESC="A GNOME library for image loading and manipulation."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      gio_can_sniff=yes
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

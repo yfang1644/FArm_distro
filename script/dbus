@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.13.10
+
+PKG_DEPENDS="expat"
+PKG_MAINTAINER="Scott James Remnant <scott@ubuntu.com>, et al"
+PKG_SECTION="system"
+PKG_SHORTDESC="simple interprocess messaging system"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-tests \
+      --disable-systemd \
+      --with-dbus-user=dbus
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

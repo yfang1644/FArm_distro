@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.20.1
+
+PKG_DEPENDS="gtk+"
+PKG_MAINTAINER="Elijah Newren<newren@gmail.com>, Vincent Untz<vuntz@gnome.org>"
+PKG_SECTION="gtk"
+PKG_SHORTDESC="Window Navigator Construction Kit"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -luuid -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

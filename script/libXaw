@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.0.11
+
+PKG_DEPENDS="libXt libXpm"
+PKG_MAINTAINER="Alan Coopersmith <alan.coopersmith@oracle.com>"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="Xaw is the X Athena Widget Set."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

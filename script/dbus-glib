@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.108
+
+PKG_DEPENDS="glib"
+PKG_MAINTAINER="Simon McVittie <smcv@debian.org>"
+PKG_SECTION="devel"
+PKG_SHORTDESC="dbus-glib is a deprecated D-Bus binding for GLib. Please use GDBus, part of GLib since 2.26"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --with-dbus-binding-tool=/usr/bin/dbus-binding-tool
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

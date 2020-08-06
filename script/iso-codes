@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=3.46
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Tobias Quathamer, <toddy@debian.org>"
+PKG_SECTION="apps"
+PKG_SHORTDESC="This package provides lists of various ISO standards in one place."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

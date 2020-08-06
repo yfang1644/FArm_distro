@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION="1.0.8"
+
+PKG_DEPENDS="libX11 libXext libXmu"
+PKG_MAINTAINER="Dr. Tilmann Bubeck <t.bubeck@reinform.de>"
+PKG_SECTION="x11/app"
+PKG_SHORTDESC="X authorization Info editor"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="${LDFLAGS} -Wl,-rpath=${INSTALL_PATH}/usr/lib"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=7.5p1
+
+PKG_DEPENDS="zlib libressl"
+PKG_MAINTAINER="Tatu Ylonen <ylo@cs.hut.fi>"
+PKG_SECTION="devel"
+PKG_SHORTDESC="Library that provides command-line editor."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --sysconfdir=/etc/ssh \
+      --disable-strip
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.8.4
+
+PKG_DEPENDS="libnftnl"
+PKG_MAINTAINER="Paul.Russell@rustcorp.com.au, mneuling@radlogic.com.au"
+PKG_SECTION="network"
+PKG_SHORTDESC="IP packet filter administration"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

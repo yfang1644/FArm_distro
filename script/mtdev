@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.1.5
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Henrik Rydberg <rydberg@euromail.se>, Canonical Ltd"
+PKG_SECTION="wayland"
+PKG_SHORTDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol."
+
+buildpkg() {
+  TARGET_CONFIGURE_OPTS=$(echo ${TARGET_CONFIGURE_OPTS}|sed "s/aarch64-/arm-/")
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.26.1
+
+PKG_DEPENDS="glib"
+PKG_MAINTAINER="Leon Fan <leon.fan@oracle.com>"
+PKG_SECTION="accessibility"
+PKG_SHORTDESC="ATK - Accessibility Toolkit"
+
+buildpkg() {
+   ../configure ${TARGET_CONFIGURE_OPTS} \
+       LDFLAGS="$LDFLAGS -lffi"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

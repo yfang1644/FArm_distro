@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.9.14
+
+PKG_DEPENDS="libXrandr libXinerama libXtst libjpeg-turbo libressl zlib"
+PKG_MAINTAINER="Karl J. Runge <runge@karlrunge.com>"
+PKG_SECTION="apps"
+PKG_SHORTDESC="VNC on x11"
+
+# -lcrypto --without-ssl build independent fbdev
+
+buildpkg() {
+  TARGET_CONFIGURE_OPTS=$(echo ${TARGET_CONFIGURE_OPTS}|sed "s/aarch64-/arm-/")
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --with-fbdev \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib"
+
+  cp ../rfb/* rfb
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

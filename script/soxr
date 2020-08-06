@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION="0.1.2"
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="robs@users.sourceforge.net"
+PKG_SECTION="audio"
+PKG_SHORTDESC="A library which performs one-dimensional sample-rate conversion."
+
+buildpkg() {
+  cmake .. \
+      -DCMAKE_SYSTEM_NAME=Linux \
+      -DCMAKE_C_COMPILER=arm-linux-gcc \
+      -DCMAKE_LINKER=arm-linux-ld \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DHAVE_WORDS_BIGENDIAN_EXITCODE=1 \
+      -DBUILD_TESTS=off \
+      -DBUILD_EXAMPLES=off \
+      -DBUILD_STATIC_LIBS=OFF \
+      -DBUILD_SHARED_LIBS=ON
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

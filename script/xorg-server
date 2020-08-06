@@ -1,0 +1,40 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.20.8
+
+PKG_DEPENDS="libXfont2 libXinerama libxkbfile libressl pixman systemd libpciaccess libXcomposite mesa"
+PKG_MAINTAINER="Adam Jackson <ajax@redhat.com>"
+PKG_SECTION="x11/xserver"
+PKG_SHORTDESC="The Xorg X server"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-record \
+      --disable-xvmc \
+      --disable-xf86bigfont \
+      --disable-screensaver \
+      --disable-xdmcp \
+      --disable-xdm-auth-1 \
+      --enable-xv \
+      --enable-dga \
+      --enable-composite \
+      --enable-xf86vidmode \
+      --enable-glx \
+      --enable-dri \
+      --enable-glamor \
+      --enable-dri2 \
+      --enable-dri3 \
+      --enable-libdrm \
+      --disable-xwayland \
+      --with-log-dir=/var/log \
+      --with-fontrootdir=/usr/share/fonts \
+      --with-module-dir=/usr/lib/xorg/modules \
+      --with-xkb-path=/usr/share/X11/xkb \
+      --with-xkb-output=/var/cache/xkb \
+      --with-default-font-path=/usr/share/fonts/misc,built-ins \
+      --with-serverconfig-path=/usr/lib/xserver
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

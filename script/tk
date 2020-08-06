@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=8.6.9
+
+PKG_DEPENDS="tcl libX11"
+PKG_MAINTAINER="Don Porter <dgp@users.sourceforge.net>"
+PKG_SECTION="lang"
+PKG_SHORTDESC="Tk is a graphical toolkit for Tcl."
+
+buildpkg() {
+  ../unix/configure ${TARGET_CONFIGURE_OPTS} \
+      --mandir=/usr/share/man \
+      LDFLAGS="$LDFLAGS -lxcb -lXau" \
+      --with-tcl=${INSTALL_PATH}/usr/lib
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

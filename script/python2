@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.7.14
+
+PKG_DEPENDS="sqlite readline libressl expat zlib bzip2 tk libffi"
+PKG_MAINTAINER="Guido van Rossum (home page: http://www.python.org/~guido/)"
+PKG_SECTION="lang"
+PKG_SHORTDESC="The Python programming language"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      ac_cv_file__dev_ptmx=no \
+      ac_cv_file__dev_ptc=no \
+      ac_cv_buggy_getaddrinfo=no \
+      ac_cv_have_long_long_format=yes \
+      --with-system-expat \
+      --with-system-ffi \
+      --with-doc-strings \
+      --without-pymalloc \
+      --without-ensurepip \
+      --with-threads \
+      --enable-ipv6 --enable-optimizations
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+  chmod u+w $INSTALL_PKG/usr/lib/libpython*.so.*
+}

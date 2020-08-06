@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=1.18.24
+
+PKG_DEPENDS="bzip2 zlib"
+PKG_MAINTAINER="Guillem Jover <guillem@debian.org>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Debian's package maintenance system"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --disable-dselect \
+      --disable-start-stop-daemon \
+      --disable-update-alternatives \
+      --without-liblzma \
+      --without-libselinux \
+      --disable-shared
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

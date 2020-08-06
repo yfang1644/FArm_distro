@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2019b
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="tz@iana.org"
+PKG_SECTION="system"
+PKG_SHORTDESC="Timezone data"
+
+buildpkg() {
+  cd ..
+  make TOPDIR=/usr install DESTDIR=$INSTALL_PKG
+
+  mkdir -p $INSTALL_PKG/usr/share/zoneinfo
+  mv $INSTALL_PKG/etc/zoneinfo/* $INSTALL_PKG/usr/share/zoneinfo
+}

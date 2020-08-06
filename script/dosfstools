@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.1
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Andreas Bombe <aeb@debian.org>"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Utilities for making and checking MS-DOS FAT filesystems."
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --without-udev
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

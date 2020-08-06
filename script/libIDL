@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=0.8.13
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Michael Meeks<michael@ximian.com>, Mark McLoughlin<mark@skynet.ie>"
+PKG_SECTION="gnome"
+PKG_SHORTDESC="CORBA Interface Definition Language (IDL)"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      libIDL_cv_long_long_format=ll
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

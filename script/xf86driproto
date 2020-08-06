@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.1.1
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Alan Coopersmith <alan.coopersmith@oracle.com>"
+PKG_SECTION="x11/proto"
+PKG_SHORTDESC="XF86DRI extension headers"
+
+buildpkg() {
+  TARGET_CONFIGURE_OPTS=$(echo ${TARGET_CONFIGURE_OPTS}|sed "s/aarch64-/arm-/")
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

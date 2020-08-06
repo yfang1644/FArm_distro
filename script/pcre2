@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=10.31
+
+PKG_DEPENDS=""
+PKG_MAINTAINER="Philip Hazel<ph10@cam.ac.uk>, Zoltan Herczeg<hzmester@freemail.hu>, et al"
+PKG_SECTION="devel"
+PKG_SHORTDESC="Perl Compatible Regulat Expressions"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS}
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

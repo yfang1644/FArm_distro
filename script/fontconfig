@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=2.13.1
+
+PKG_DEPENDS="expat freetype util-linux"
+PKG_MAINTAINER="Akira TAGOH <akira@tagoh.org>"
+PKG_SECTION="x11/other"
+PKG_SHORTDESC="Library for font customization and configuration"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      --with-default-fonts=/usr/share/fonts
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PKG_NAME=$1
+PKG_VERSION=4.14.2
+
+PKG_DEPENDS="exo garcon libwnck"
+PKG_MAINTAINER="Benedikt Meurer <benny@xfce.org>, et al"
+PKG_SECTION="xfce4"
+PKG_SHORTDESC="Xfce4 desktop manager"
+
+buildpkg() {
+  ../configure ${TARGET_CONFIGURE_OPTS} \
+      LDFLAGS="$LDFLAGS -Wl,-rpath-link=$INSTALL_PATH/usr/lib -luuid"
+
+  make $MAKEFLAGS
+  make DESTDIR=$INSTALL_PKG install
+}
